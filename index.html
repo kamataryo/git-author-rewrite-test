@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Change Email</title>
+</head>
+
+<body>
+  <h1>GitHub に登録した Email を変更するコマンド生成機</h1>
+  <label for="username">GitHub のユーザー名</label>
+  <input type="text" id="username" />
+  <pre><code  id="command"></code></pre>
+
+  <script>
+    const username = document.getElementById('username')
+    const command = document.getElementById('command')
+
+    username.addEventListener('keyup', () => {
+      const value = username.value
+
+      command.innerHTML = value ? `git filter-branch -f --env-filter \\
+       "GIT_AUTHOR_EMAIL='${value}@users.noreply.github.com'; \\
+        GIT_COMMITTER_EMAIL='${value}@users.noreply.github.com';" \\
+HEAD && git push -f origin master` : ''
+    })
+  </script>
+</body>
+
+</html>
